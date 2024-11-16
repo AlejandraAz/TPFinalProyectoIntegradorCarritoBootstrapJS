@@ -1,35 +1,66 @@
 const modal = new bootstrap.Modal(document.getElementById('carritoModal'));
 class Producto{
-    constructor(nombre,categoria,img,stock,precio,codigo,marca,descripcion){
+    constructor(nombre,img,stock,precio,codigo,marca,descripcion,cantidad = 1){
         this.nombre = nombre;
-        this.categoria = categoria;
         this.img = img;
         this.stock = stock;
         this.precio = precio;
         this.codigo = codigo;
         this.marca = marca;
         this.descripcion = descripcion;
+        this.cantidad = cantidad;
     }
 };
 
+class ProductoCelular extends Producto{
+    constructor(nombre,img,stock,precio,codigo,marca,descripcion,categoria,modelo,pantalla,procesador){
+        super(nombre,img,stock,precio,codigo,marca,descripcion)
+        this.categoria = 'Celulares';
+        this.modelo = modelo; 
+        this.pantalla = pantalla; 
+        this.procesador = procesador;
+    }
+}
 
 class Carrito{
     constructor(){
         this.productos = JSON.parse(localStorage.getItem('productos')) || [];
     }
 
-    agregarProducto(producto){
-        this.productos.push(producto);
-        // Guardo en localstorage
-        localStorage.setItem('productos',JSON.stringify(this.productos));
+    // agregarProducto(producto) {
+    //     const productoExistente = this.productos.find(p => p.codigo === producto.codigo);
+    
+    //     if (productoExistente) {
+    //         productoExistente.cantidad++;
+    //     } else {
+    //         this.productos.push({ ...producto, cantidad: 1 }); // Añadimos el producto con cantidad 1
+    //     }
+    
+    //     // Guardar en LocalStorage
+    //     localStorage.setItem('productos', JSON.stringify(this.productos));
+    
+    //     this.actualizarCarrito();
+    //     this.actualizarContadorProductos();
+    // }
+    
+    agregarProducto(producto) {
+        const existe = this.productos.find((p) => p.codigo === producto.codigo);
+        if (existe) {
+            if (existe.cantidad < existe.stock) {
+                existe.cantidad++;
+            } else {
+                Swal.fire('Stock insuficiente', 'No puedes agregar más de este producto', 'error');
+            }
+        } else {
+            this.productos.push(producto);
+        }
+        localStorage.setItem('productos', JSON.stringify(this.productos));
         this.actualizarCarrito();
         this.actualizarContadorProductos();
-         // Actualizar el contador en el icono
     }
 
     eliminarProducto(index) {
         if (index >= 0 && index < this.productos.length) {
-            // Mostrar confi .-) usando SweetAlert2
             Swal.fire({
                 title: `¿Deseas eliminar ${this.productos[index].nombre} ${this.productos[index].marca}?`,
                 text: "Esta acción no se puede deshacer",
@@ -38,14 +69,21 @@ class Carrito{
                 confirmButtonText: 'Eliminar',
                 cancelButtonText: 'Cancelar',
                 reverseButtons: true,
-                focusCancel: true
+                focusCancel: true,
+                customClass: {
+                    confirmButton: 'custom-confirm-button', // Aplica la clase para el botón rojo
+                    cancelButton: 'btn-secondary' // Puedes usar clases predeterminadas o personalizadas para el botón de cancelar
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Si el usuario confirma la eliminación
-                    this.productos.splice(index, 1);
+                    if (this.productos[index].cantidad > 1) {
+                        this.productos[index].cantidad--;
+                    } else {
+                        this.productos.splice(index, 1);
+                    }
                     Swal.fire({
-                        title: 'Producto eliminado',
-                        text: 'El producto fue eliminado correctamente',
+                        title: 'Producto actualizado',
+                        text: 'El producto fue modificado correctamente',
                         icon: 'success',
                         confirmButtonText: 'Aceptar'
                     });
@@ -54,21 +92,20 @@ class Carrito{
                     this.actualizarContadorProductos();
                 }
             });
-        } 
+        }
     }
-    
     actualizarCarrito() {
         const div_carrito = document.getElementById('carrito');
         const totalProductosSpan = document.getElementById('contador-productos'); // Span para el número de productos
         div_carrito.innerHTML = '';
-
+    
         let total = 0;
         if (this.productos.length === 0) {
             div_carrito.innerHTML = '<p class="text-center fw-bold text-uppercase text-warning-emphasis">No tienes productos añadidos.</p>';
-            totalProductosSpan.innerText = '0'; // Muestra 0 productos en el icono del carrito
+            totalProductosSpan.innerText = '0'; 
         } else {
             this.productos.forEach((prod, index) => {
-                total += prod.precio;
+                total += prod.precio * prod.cantidad;
                 let item_carrito = document.createElement('div');
                 item_carrito.classList = 'col-12 my-2';
                 item_carrito.innerHTML = `
@@ -77,18 +114,35 @@ class Carrito{
                             <img src="${prod.img}" alt="${prod.nombre}" class="img-fluid me-3" style="width: 50px;">
                             <div>
                                 <p class="mb-0 text-muted">${prod.marca} - US$ ${prod.precio.toFixed(2)}</p>
+                                <label for="cantidad-${index}" class="me-2">Cantidad:</label>
+                                <input type="number" id="cantidad-${index}" min="1" max="${prod.stock}" value="${prod.cantidad}" class="form-control form-control-sm cantidad-input" style="width: 70px;">
                             </div>
                         </div>
                         <button class="btn btn-danger btn-sm">Eliminar</button>
                     </div>
                 `;
+                
+                // Escuchar cambios en el input de cantidad
+                const inputCantidad = item_carrito.querySelector(`#cantidad-${index}`);
+                inputCantidad.addEventListener('change', (e) => {
+                    const nuevaCantidad = parseInt(e.target.value);
+                    if (nuevaCantidad >= 1 && nuevaCantidad <= prod.stock) {
+                        prod.cantidad = nuevaCantidad;
+                        localStorage.setItem('productos', JSON.stringify(this.productos));
+                        this.actualizarCarrito(); // Recalcula total y actualiza la vista
+                    } else {
+                        e.target.value = prod.cantidad; // Revertir al valor anterior si no es válido
+                    }
+                });
+    
                 const btnEliminar = item_carrito.querySelector('button');
                 btnEliminar.addEventListener('click', this.eliminarProducto.bind(this, index));
                 div_carrito.appendChild(item_carrito);
             });
-            totalProductosSpan.innerText = this.productos.length; // Actualiza el número de productos en el icono del carrito
+    
+            totalProductosSpan.innerText = this.productos.length; 
         }
-
+    
         document.getElementById('total').innerText = `Total: US$${total.toFixed(2)}`;
         modal.show();
     }
@@ -111,4 +165,4 @@ class Carrito{
 
 
 
-export  { Producto,Carrito };
+export  { Producto,ProductoCelular,Carrito };

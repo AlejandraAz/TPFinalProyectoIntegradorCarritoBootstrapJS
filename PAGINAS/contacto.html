@@ -17,90 +17,90 @@
 
 <body>
 
-    
-<header>
-    <nav class="navbar navbar-expand-lg bg-secondary">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center text-light" href="/index.html">
-                <img id="logo" src="/Assets/AppTech-removebg-preview.png" alt="logo">
-            </a>
-            <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="bi bi-list fs-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item fw-bold active">
-                        <a class="nav-link active text-light " href="/index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item fw-bold">
-                        <a class="nav-link text-light" href="/PAGINAS/Nosotros.html">Nosotros</a>
-                    </li>
-                    <li class="nav-item fw-bold">
-                        <a class="nav-link text-light" href="/PAGINAS/contacto.html">Contacto</a>
-                    </li>
-                </ul>
-                <button class="btn  position-relative ms-lg-3 " id="el-carrito">
-                    <i class="bi bi-cart3 fs-3 text-light"></i>
-                    <span id="contador-productos"
-                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        0
-                    </span>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-secondary">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center text-light" href="/index.html">
+                    <img id="logo" src="/Assets/AppTech-removebg-preview.png" alt="logo">
+                </a>
+                <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-1"></i>
                 </button>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<section>
-    <div class="carrusel">
-        <div class="slides">
-            <div class="slide">
-                <img src="/Assets/iphoneCarrusel.webp" alt="Celular 1">
-            </div>
-            <div class="slide">
-                <img src="/Assets/iphoneCarrusel2.webp" alt="celulares 2">
-            </div>
-            <div class="slide">
-                <img src="/Assets/IphoneCarrusel3.webp" alt="celulares 3">
-            </div>
-        </div>
-        <button class="prev" onclick="cambiarSlide(-1)"><i class="bi bi-arrow-left"></i></button>
-        <button class="next" onclick="cambiarSlide(1)"><i class="bi bi-arrow-right"></i></button>
-    </div>
-</section>
-    
-        
-        
-
-    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="carritoModalLabel">Mis compras</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item fw-bold active">
+                            <a class="nav-link  text-light " href="/index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item fw-bold">
+                            <a class="nav-link text-light" href="/PAGINAS/Nosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item fw-bold">
+                            <a class="nav-link active text-light" href="/PAGINAS/contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                    <button class="btn  position-relative ms-lg-3 " id="el-carrito">
+                        <i class="bi bi-cart3 fs-3 text-light"></i>
+                        <span id="contador-productos"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <div id="carrito" class="row">
-                        <!-- Aquí se mostrará el contenido del carrito o el mensaje de vacío -->
-                        <p id="mensaje-vacio" class="text-center w-100">No tienes productos añadidos al carrito</p>
+            </div>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container mt-5">
+            <div class="row ">
+                <div class="my-3 p-2 col text-center float-right">
+                    <h5>CONTACTANOS</h5>
+                    <hr>
+                    <table class="container text-center">
+                        <tr>
+                            <th>CALL CENTER</th>
+                        </tr>
+                        <tr>
+                            <td>0800-555-1234</td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <h5>ESCRIBENOS!</h5>
+                    <div class="p-1 mb-3">
+                        <form action="#" class="was-validated">
+                            <input type="text" class="form-control" name="name"  id="name"  minlength="3" maxlength="25"
+                            placeholder="NOMBRE COMPLETO" required >
+                            <div class="invalid-feedback ">Escribe tu nombre y apellido</div>
+                            <div class="valid-feedback ">Muy Bien!</div>
+                    </div>
+                    <div class="was-validated">
+                    <div class=" p-1 mb-3">
+                        <input type="email"  class="form-control" name="correo"  id="correo"
+                            placeholder="CORREO ELECTRONICO"  required >
+                            <div class="invalid-feedback ">Escribe tu correo electrónico ej: juan@gmail.com</div>
+                            <div class="valid-feedback ">Genial!</div>
+                    </div>
+                    <div class="was-validated">
+                        <textarea class="cuadro form-control " minlength=20 maxlength="300"
+                            placeholder="DEJANOS TU CONSULTA"required rows="4" required></textarea>
+                            <div class="invalid-feedback ">Escribe un min. de 50 caracteres a un max. 300 caracteres</div>
+                            <div class="valid-feedback ">Gracias por contactarte, te responderemos a la brevedad.</div>
+                            <button type="submit" class="btn d-grid btn-success col-6 mx-auto mt-3">Enviar
+                            </button>
+                        </form>
+                        <hr>
+                        
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <h5 id="total">Total: US$0.00</h5>
+                </div>
+                <div class="col-lg-6  my-3">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108953.31573247549!2d-64.33243845664062!3d-31.419880699999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a32dcf5d747f%3A0x40373220b29140ac!2sPatio%20Olmos%20Shopping!5e0!3m2!1ses-419!2sar!4v1731784720303!5m2!1ses-419!2sar" width="100%" height="550" style="border:1px solid gray; border-radius:20px;"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container ">
-        <h1 class="text-danger-emphasis text-center my-5">Productos disponibles</h1>
-        <div class="row" id="fila-tarjetas">
-            <!-- cards que muestran productos -->
-        </div>
-    </div>
-
+    </section>
 
     <footer class=" text-light mt-5 pt-3 pb-4 bg-secondary">
         <div class="container  text-center text-md-start">
@@ -156,11 +156,7 @@
     </footer>
 
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="/JS/app.js"></script>
-    <script src="/JS/carrusel.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
