@@ -29,27 +29,31 @@ window.seleccionarProducto =(index,carrito)=>{
 
 
 // **************  la funcion es creada para mostrar las tarjetas con productos disponibles:
-const verTodosLosProductos = (productos)=>{
+
+const verTodosLosProductos = (productos) => {
     const fila = document.getElementById('fila-tarjetas');
     fila.innerHTML = "";
-    productos.map((prod,index)=>{
-        const columna = document.createElement('div')
-        columna.classList='col-12 col-sm-6 col-md-4 my-2 ';
-        const tarjetas = `<div class="card h-100 shadow" >
-        <img src=${prod.img} class="card-img-top" alt="${prod.nombre}">
-        <div class="card-body">
-        <h5 class="card-title">${prod.nombre} ${prod.marca}</h5>
-        <p class="card-text text-warning-emphasis"> <strong>US$ ${prod.precio}</strong></p>
-        <div class="d-grid">
-        <button  class="btn  fw-bold btn-primary" onclick="seleccionarProducto(${index},carrito_1)">comprar</button></div>
-        </div>
-        </div>`
+    productos.map((prod, index) => {
+        const columna = document.createElement('div');
+        columna.classList = 'tarjeta';
+
+        const tarjetas = `
+            <img src=${prod.img} class="img-tarjeta" alt="${prod.nombre}">
+            <div class="cuerpo-tarjeta">
+                <h5 class="titulo-tarjeta">${prod.nombre} ${prod.marca}</h5>
+                <p class="texto-tarjeta"> <strong>US$ ${prod.precio}</strong></p>
+                <div class="d-grid">
+                    <button class="btn-comprar" onclick="seleccionarProducto(${index}, carrito_1)">comprar</button>
+                </div>
+            </div>
+        `;
         columna.innerHTML = tarjetas;
         fila.append(columna);
-        })
-    }
+    });
+};
 
 verTodosLosProductos(listaDeProductos);
+
 
 btn_carrito.addEventListener('click',()=>carrito_1.actualizarCarrito())
 

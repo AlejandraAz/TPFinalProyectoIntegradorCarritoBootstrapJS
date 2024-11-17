@@ -26,23 +26,6 @@ class Carrito{
     constructor(){
         this.productos = JSON.parse(localStorage.getItem('productos')) || [];
     }
-
-    // agregarProducto(producto) {
-    //     const productoExistente = this.productos.find(p => p.codigo === producto.codigo);
-    
-    //     if (productoExistente) {
-    //         productoExistente.cantidad++;
-    //     } else {
-    //         this.productos.push({ ...producto, cantidad: 1 }); // Añadimos el producto con cantidad 1
-    //     }
-    
-    //     // Guardar en LocalStorage
-    //     localStorage.setItem('productos', JSON.stringify(this.productos));
-    
-    //     this.actualizarCarrito();
-    //     this.actualizarContadorProductos();
-    // }
-    
     agregarProducto(producto) {
         const existe = this.productos.find((p) => p.codigo === producto.codigo);
         if (existe) {
@@ -70,9 +53,10 @@ class Carrito{
                 cancelButtonText: 'Cancelar',
                 reverseButtons: true,
                 focusCancel: true,
+                // cambio la clase p/ cambiar el color del botón rojo
                 customClass: {
-                    confirmButton: 'custom-confirm-button', // Aplica la clase para el botón rojo
-                    cancelButton: 'btn-secondary' // Puedes usar clases predeterminadas o personalizadas para el botón de cancelar
+                    confirmButton: 'custom-confirm-button', 
+                    cancelButton: 'btn-secondary'
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -129,7 +113,7 @@ class Carrito{
                     if (nuevaCantidad >= 1 && nuevaCantidad <= prod.stock) {
                         prod.cantidad = nuevaCantidad;
                         localStorage.setItem('productos', JSON.stringify(this.productos));
-                        this.actualizarCarrito(); // Recalcula total y actualiza la vista
+                        this.actualizarCarrito(); 
                     } else {
                         e.target.value = prod.cantidad; // Revertir al valor anterior si no es válido
                     }

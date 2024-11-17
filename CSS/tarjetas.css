@@ -1,0 +1,84 @@
+
+.contenedor-tarjetas {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+
+@media (max-width: 576px) { 
+    .contenedor-tarjetas {
+        /* 1 tarjeta por fila */
+        grid-template-columns: 1fr; 
+    }
+}
+
+@media (min-width: 577px) and (max-width: 768px) { 
+    .contenedor-tarjetas {
+        /* 2 tarjetas por fila */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (min-width: 769px) { 
+    .contenedor-tarjetas {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.img-tarjeta {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.cuerpo-tarjeta{
+    padding: 1rem;
+}
+
+.titulo-tarjeta {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.texto-tarjeta {
+    font-size: 1rem;
+    color: #f39c12; 
+    margin-bottom: 1rem;
+}
+
+.btn-comprar {
+    background-color: #fff;
+    color: #007bff;
+    border: 2px solid #007bff;
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-comprar:hover {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+}
