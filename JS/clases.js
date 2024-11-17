@@ -66,8 +66,8 @@ class Carrito{
                         this.productos.splice(index, 1);
                     }
                     Swal.fire({
-                        title: 'Producto actualizado',
-                        text: 'El producto fue modificado correctamente',
+                        title: 'Carrito actualizado',
+                        text: 'El producto fue eliminado correctamente',
                         icon: 'success',
                         confirmButtonText: 'Aceptar'
                     });
